@@ -6,7 +6,7 @@ import './App.css';
 const App = () => {
   return (
     <>
-      <div>
+      <div className="root-notifications">
         <Notifications />
       </div>
       <div className="App-header">
