@@ -4,9 +4,9 @@ const getCurrentYear = () => {
 
 const getFooterCopy = (isIndex) => {
     if(isIndex === true){
-        return `Holberton School main dashboard`
+        return "Holberton School main dashboard";
     } else {
-        return `Holberton School`
+        return "Holberton School";
     }
 }
 

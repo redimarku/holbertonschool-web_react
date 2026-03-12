@@ -1,4 +1,4 @@
-import { getFooterCopy, getCurrentYear } from './utils';
+import { getCurrentYear, getFooterCopy } from './utils';
 import Notifications from './Notifications';
 import image3 from './assets/holberton-logo.jpg';
 import './App.css';
@@ -6,7 +6,7 @@ import './App.css';
 const App = () => {
   return (
     <>
-      <div className="root-notifications">
+      <div>
         <Notifications />
       </div>
       <div className="App-header">
