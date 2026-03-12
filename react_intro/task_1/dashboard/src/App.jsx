@@ -1,33 +1,23 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { getFooterCopy, getCurrentYear } from './utils';
+import Notifications from './Notifications';
+import image3 from './assets/holberton-logo.jpg';
+import './App.css';
 
-function App() {
-  const [count, setCount] = useState(0)
-
+const App = () => {
+  const date = new Date();
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <Notifications />
+      <div className="App-header">
+        <img src={image3} alt='holberton logo' style={{ width: '300px', height: '350px' }} />
+        <h1 style={{ color: '#e1003c' }}>School dashboard</h1>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
+      <div className='App-body'>
+        <p>Login to access the full dashboard</p>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <div className='App-footer'>
+        <p>Copyright {getCurrentYear()} {getFooterCopy()}</p>
+      </div>
     </>
   )
 }
