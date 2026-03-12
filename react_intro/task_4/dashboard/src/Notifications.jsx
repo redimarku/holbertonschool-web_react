@@ -11,9 +11,9 @@ const Notifications = () =>{
         <div className="notification-items">
             <p>Here is the list of notifications</p>
             <ul>
-                <li data-priority="default">New course available</li>
-                <li data-priority="urgent">New resume available</li>
-                <li dangerouslySetInnerHTML={{ __html: getLatestNotification() }}></li>
+                <li data-priority="default" style={{color:"blue"}}>New course available</li>
+                <li data-priority="urgent" style={{color:"red"}}>New resume available</li>
+                <li dangerouslySetInnerHTML={{ __html: getLatestNotification() }} style={{color:"red"}}></li>
             </ul>
             <button style={{float:'right'}} aria-label="Close" onClick={handleClick}>
                 <img src={closeButton} style={{width: "13px", height: "10px"}}/>
