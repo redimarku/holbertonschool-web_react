@@ -1,5 +1,5 @@
 import './Notifications.css';
-import closeButtton from './assets/close-button.png'
+import closeButton from './assets/close-button.png'
 import { getLatestNotification } from './utils';
 
 const Notifications = () =>{
@@ -16,7 +16,7 @@ const Notifications = () =>{
                 <li dangerouslySetInnerHTML={{ __html: getLatestNotification() }}></li>
             </ul>
             <button style={{float:'right'}} aria-label="Close" onClick={handleClick}>
-                <img src={closeButtton} style={{width: "13px", height: "10px"}}/>
+                <img src={closeButton} style={{width: "13px", height: "10px"}}/>
             </button>
         </div>
     )
