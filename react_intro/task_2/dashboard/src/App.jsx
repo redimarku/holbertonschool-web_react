@@ -22,7 +22,7 @@ const App = () => {
         <label htmlFor="password">password</label>
         <input type="password" id="password"></input>
 
-        <button type="submit">Ok</button>
+        <button>Ok</button>
       </div>
       <div className='App-footer'>
         <p>Copyright {getCurrentYear()} - {getFooterCopy(true)}</p>
