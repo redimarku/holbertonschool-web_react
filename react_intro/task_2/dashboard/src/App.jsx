@@ -3,26 +3,31 @@ import Notifications from './Notifications';
 import image3 from './assets/holberton-logo.jpg';
 import './App.css';
 
-const App = () => {
+
+function App() {
+
   return (
     <>
-      <div className="root-notifications">
+      <div>
         <Notifications />
       </div>
-      <div className="App-header">
-        <img src={image3} alt='holberton logo' style={{ width: '300px', height: '350px' }} />
-        <h1 style={{ color: '#e1003c' }}>School dashboard</h1>
+      <div className='App-header'>
+        <img src={image3} alt='holberton logo' />
+        <h1 style={{ color: "#e1003c" }}>School dashboard</h1>
       </div>
+
       <div className='App-body'>
-         <p >Login to access the full dashboard</p>
-        <label htmlFor='email' >Email</label>
-        <input type='email' id='email' />
-        <label htmlFor='password' >Password</label>
-        <input type='password'   id='password' />
-        <button>OK</button>
+        <p> Login to access the full dashboard</p>
+        <label htmlFor="email">email</label>
+        <input type="email" id="email"></input>
+
+        <label htmlFor="password">password</label>
+        <input type="password" id="password"></input>
+
+        <button type="submit">OK</button>
       </div>
       <div className='App-footer'>
-        <p>Copyright {getCurrentYear()} - {getFooterCopy(true)}</p>
+        <p>Copyright {getCurrentYear()} -  {getFooterCopy(true)}</p>
       </div>
     </>
   )
