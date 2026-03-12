@@ -18,15 +18,10 @@ const App = () => {
 
       <label htmlFor="email">Email</label>
       <input type="email" id="email" />
-
-      <br />
-
-      <label htmlFor="password">Password</label>
+     <label htmlFor="password">Password</label>
       <input type="password" id="password" />
-
       <br />
-
-      <button type="button">OK</button>
+      <button>OK</button>
   </div>
       <div className='App-footer'>
         <p>Copyright {getCurrentYear()} - {getFooterCopy(true)}</p>
