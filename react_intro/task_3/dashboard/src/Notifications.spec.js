@@ -8,11 +8,11 @@ describe("Notifications component", () => {
         expect(title).toBeInTheDocument();
     });
 
-    test("renders a close button", () => {
-        render(<Notifications />);
-        const button = screen.getByRole("button", { name: /close/i });
-        expect(button).toBeInTheDocument();
-    });
+   test("renders a close button", () => {
+    render(<Notifications />);
+    const button = screen.getByLabelText(/close/i);  // Matches aria-label directly
+    expect(button).toBeInTheDocument();
+});
 
     test("renders 3 list items", () => {
         render(<Notifications />);
@@ -20,12 +20,12 @@ describe("Notifications component", () => {
         expect(listItems).toHaveLength(3);
     });
 
-    test("clicking the close button logs to console", () => {
-        const logSpy = jest.spyOn(console, "log").mockImplementation(() => { });
-        render(<Notifications />);
-        const button = screen.getByRole("button", { name: /close/i });
-        fireEvent.click(button);
-        expect(logSpy).toHaveBeenCalledWith("Close button has been clicked");
-        logSpy.mockRestore();
-    });
+   test("clicking the close button logs to console", () => {
+    const logSpy = jest.spyOn(console, "log").mockImplementation(() => { });
+    render(<Notifications />);
+    const button = screen.getByLabelText(/close/i);  // Same here
+    fireEvent.click(button);
+    expect(logSpy).toHaveBeenCalledWith("Close button has been clicked");
+    logSpy.mockRestore();
+});
 });
