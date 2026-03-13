@@ -15,7 +15,7 @@ const Notifications = () =>{
                 <li data-priority="urgent">New resume available</li>
                 <li data-priority="urgent" dangerouslySetInnerHTML={{ __html: getLatestNotification() }}></li>
             </ul>
-            <button style={{float:'right'}} aria-label="Close" onClick={handleClick}>
+            <button aria-label="Close" onClick={handleClick}>
                 <img src={closeButton} alt="close" style={{width: "13px", height: "10px"}}/>
             </button>
         </div>
