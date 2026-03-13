@@ -8,13 +8,13 @@ import { Fragment } from 'react/jsx-runtime';
 function App() {
 
   return (
-    <>
+    <Fragment>
    
       <Notifications />
       <Header />
       <Login />
       <Footer />
-    </>
+    </Fragment>
   )
 }
 
