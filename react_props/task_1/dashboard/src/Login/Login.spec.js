@@ -18,12 +18,12 @@ test('inputs get focused when related label is clicked', async () => {
   const user = userEvent.setup();
   render(<Login />);
 
-  const emailInput = screen.getByLabelText('email');
-  const passwordInput = screen.getByLabelText('password');
+  const emailInput = screen.getByLabelText(/email/i);
+  const passwordInput = screen.getByLabelText(/password/i);
 
-  await user.click(screen.getByText('email'));
+  await user.click(screen.getByText(/email/i));
   expect(emailInput).toHaveFocus();
 
-  await user.click(screen.getByText('password'));
+  await user.click(screen.getByText(/password/i));
   expect(passwordInput).toHaveFocus();
 });

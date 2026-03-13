@@ -8,12 +8,13 @@ test('Header renders without crashing', () => {
 
 test('Header contains the Holberton logo', () => {
   render(<Header />);
-  const logo = screen.getByAltText('holberton logo');
+  const logo = screen.getByAltText(/holberton logo/i);
   expect(logo).toBeInTheDocument();
 });
 
 test('Header contains h1 with correct text', () => {
   render(<Header />);
-  const heading = screen.getByText('School dashboard');
-  expect(heading.tagName).toBe('H1');
+  const heading = screen.getByRole('heading', { name: /School dashboard/i });
+  expect(heading).toBeInTheDocument();
+  expect(heading.tagName).toBe('H1'); // safe uppercase check
 });
