@@ -1,31 +1,37 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import Notifications from './Notifications';
- 
+
 describe('Notifications component', () => {
+
   test('renders the notifications title', () => {
     render(<Notifications />);
     const title = screen.getByText(/here is the list of notifications/i);
     expect(title).toBeInTheDocument();
   });
- 
-  test('renders a button element', () => {
+
+  test('renders the close button', () => {
     render(<Notifications />);
     const button = screen.getByRole('button', { name: /close/i });
     expect(button).toBeInTheDocument();
   });
- 
-  test('renders 3 li elements as notifications', () => {
+
+  test('renders three list items', () => {
     render(<Notifications />);
-    const listItems = screen.getAllByRole('listitem');
-    expect(listItems).toHaveLength(3);
+    const items = screen.getAllByRole('listitem');
+    expect(items.length).toBe(3);
   });
- 
-  test('clicking the close button logs "Close button has been clicked" to the console', () => {
-    const consoleSpy = jest.spyOn(console, 'log').mockImplementation(() => {});
+
+  test('logs message when close button is clicked', () => {
+    const logSpy = jest.spyOn(console, 'log').mockImplementation(() => {});
+
     render(<Notifications />);
     const button = screen.getByRole('button', { name: /close/i });
+
     fireEvent.click(button);
-    expect(consoleSpy).toHaveBeenCalledWith('Close button has been clicked');
-    consoleSpy.mockRestore();
+
+    expect(logSpy).toHaveBeenCalledWith('Close button has been clicked');
+
+    logSpy.mockRestore();
   });
+
 });
