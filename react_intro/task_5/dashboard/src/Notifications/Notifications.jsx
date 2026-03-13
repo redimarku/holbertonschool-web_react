@@ -1,13 +1,13 @@
 import './Notifications.css';
-import closeButton from './assets/close-button.png'
-import { getLatestNotification } from './utils';
+import closeButton from '../assets/close-button.png'
+import { getLatestNotification } from '../utils/utils';
 
-const Notifications = () =>{
+const Notifications = () => {
 
-    const handleClick = () =>{
+    const handleClick = () => {
         console.log("Close button has been clicked");
     }
-    return(
+    return (
         <div className="notification-items">
             <p>Here is the list of notifications</p>
             <ul>
@@ -16,7 +16,7 @@ const Notifications = () =>{
                 <li data-priority="urgent" dangerouslySetInnerHTML={{ __html: getLatestNotification() }}></li>
             </ul>
             <button aria-label="Close" onClick={handleClick}>
-                <img src={closeButton} alt="close" style={{width: "13px", height: "10px"}}/>
+                <img src={closeButton} alt="close" style={{ width: "13px", height: "10px" }} />
             </button>
         </div>
     )
