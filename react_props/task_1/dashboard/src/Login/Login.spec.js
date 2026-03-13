@@ -14,14 +14,16 @@ test('Login includes 2 labels, 2 inputs, and 1 button', () => {
   expect(container.querySelectorAll('button')).toHaveLength(1);
 });
 
-test('inputs get focused when related label is clicked', () => {
+test('inputs get focused when related label is clicked', async () => {
+  const user = userEvent.setup();
   render(<Login />);
+
   const emailInput = screen.getByLabelText('email');
   const passwordInput = screen.getByLabelText('password');
 
-  userEvent.click(screen.getByText('email'));
+  await user.click(screen.getByText('email'));
   expect(emailInput).toHaveFocus();
 
-  userEvent.click(screen.getByText('password'));
+  await user.click(screen.getByText('password'));
   expect(passwordInput).toHaveFocus();
 });
