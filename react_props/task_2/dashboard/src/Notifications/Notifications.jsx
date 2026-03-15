@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import NotificationItem from './NotificationItem';
+import './Notifications.css'
 
 function Notifications({ notifications = [] }) {
   return (
-    <div className="Notifications">
+    <div className="notification-items">
       <p>Here is the list of notifications</p>
       <ul>
         {notifications.map((notif) => (
