@@ -3,17 +3,25 @@ import { shallow } from 'enzyme';
 import NotificationItem from './NotificationItem';
 
 describe('NotificationItem component', () => {
-  it('renders with default type', () => {
-    const wrapper = shallow(<NotificationItem type="default" value="test" />);
+  it('renders default notification correctly', () => {
+    const wrapper = shallow(
+      <NotificationItem type="default" value="test notification" />
+    );
 
-    expect(wrapper.prop('data-notification-type')).toEqual('default');
-    expect(wrapper.prop('style')).toEqual({ color: 'blue' });
+    const li = wrapper.find('li');
+
+    expect(li.prop('data-notification-type')).toBe('default');
+    expect(li.prop('style')).toEqual({ color: 'blue' });
   });
 
-  it('renders with urgent type', () => {
-    const wrapper = shallow(<NotificationItem type="urgent" value="test" />);
+  it('renders urgent notification correctly', () => {
+    const wrapper = shallow(
+      <NotificationItem type="urgent" value="test notification" />
+    );
 
-    expect(wrapper.prop('data-notification-type')).toEqual('urgent');
-    expect(wrapper.prop('style')).toEqual({ color: 'red' });
+    const li = wrapper.find('li');
+
+    expect(li.prop('data-notification-type')).toBe('urgent');
+    expect(li.prop('style')).toEqual({ color: 'red' });
   });
 });
