@@ -6,7 +6,7 @@ import Login from '../Login/Login';
 import Footer from '../Footer/Footer';
 import CourseList from '../CourseList/CourseList';
 
-function App({ isLoggedIn = true }) {
+function App({ isLoggedIn = false }) {
   const notificationsList = [
     { id: 1, type: 'default', value: 'New course available' },
     { id: 2, type: 'urgent', value: 'New resume available' },
@@ -14,9 +14,9 @@ function App({ isLoggedIn = true }) {
   ];
 
   const coursesList = [
-    // { id: 1, name: 'ES6', credit: 60 },
-    // { id: 2, name: 'Webpack', credit: 20 },
-    // { id: 3, name: 'React', credit: 40 },
+    { id: 1, name: 'ES6', credit: 60 },
+    { id: 2, name: 'Webpack', credit: 20 },
+    { id: 3, name: 'React', credit: 40 },
   ];
 
   return (
