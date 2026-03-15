@@ -28,14 +28,14 @@ const CourseList = ({ courses = [] }) => {
   );
 };
 
-CourseList.propTypes = {
-  courses: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      name: PropTypes.string.isRequired,
-      credit: PropTypes.number.isRequired,
-    })
-  ),
-};
+// CourseList.propTypes = {
+//   courses: PropTypes.arrayOf(
+//     PropTypes.shape({
+//       id: PropTypes.number.isRequired,
+//       name: PropTypes.string.isRequired,
+//       credit: PropTypes.number.isRequired,
+//     })
+//   ),
+// };
 
 export default CourseList;
