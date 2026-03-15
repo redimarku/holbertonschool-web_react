@@ -4,15 +4,10 @@ import PropTypes from 'prop-types';
 function NotificationItem({ type = 'default', value = '', html = null }) {
   const color = type === 'urgent' ? 'red' : 'blue';
 
-  return html ? (
-    <li
-      data-notification-type={type}
-      style={{ color }}
-      dangerouslySetInnerHTML={html}
-    />
-  ) : (
+  // Always render the <li> with data-notification-type and style
+  return (
     <li data-notification-type={type} style={{ color }}>
-      {value}
+      {html ? <span dangerouslySetInnerHTML={{ __html: html.__html }} /> : value}
     </li>
   );
 }
