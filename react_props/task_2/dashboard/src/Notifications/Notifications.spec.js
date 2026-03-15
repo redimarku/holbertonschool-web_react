@@ -15,8 +15,29 @@ describe('Notifications component', () => {
     expect(wrapper.find(NotificationItem)).toHaveLength(3);
   });
 
-  it('renders the correct text', () => {
+  it('renders first item with correct type and value', () => {
     const wrapper = shallow(<Notifications notifications={notificationsList} />);
-    expect(wrapper.contains(<NotificationItem type="default" value="New course available" />)).toBe(true);
+    const first = wrapper.find(NotificationItem).at(0);
+    expect(first.prop('type')).toBe('default');
+    expect(first.prop('value')).toBe('New course available');
+  });
+
+  it('renders second item with correct type and value', () => {
+    const wrapper = shallow(<Notifications notifications={notificationsList} />);
+    const second = wrapper.find(NotificationItem).at(1);
+    expect(second.prop('type')).toBe('urgent');
+    expect(second.prop('value')).toBe('New resume available');
+  });
+
+  it('renders third item with correct type and html', () => {
+    const wrapper = shallow(<Notifications notifications={notificationsList} />);
+    const third = wrapper.find(NotificationItem).at(2);
+    expect(third.prop('type')).toBe('urgent');
+    expect(third.prop('html')).toEqual({ __html: 'Urgent requirement - complete by EOD' });
+  });
+
+  it('renders with empty array when no notifications prop passed', () => {
+    const wrapper = shallow(<Notifications />);
+    expect(wrapper.find(NotificationItem)).toHaveLength(0);
   });
 });
