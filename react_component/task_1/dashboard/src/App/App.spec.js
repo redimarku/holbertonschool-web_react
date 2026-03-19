@@ -49,7 +49,6 @@ describe('App component', () => {
     });
   });
 
-  // ✅ NEW TESTS
   describe('keyboard events', () => {
     let alertMock;
 
@@ -65,33 +64,21 @@ describe('App component', () => {
       const logOutMock = jest.fn();
       const wrapper = shallow(<App logOut={logOutMock} />);
 
-      // Manually trigger lifecycle
-      wrapper.instance().componentDidMount();
-
-      const event = new KeyboardEvent('keydown', {
-        key: 'h',
-        ctrlKey: true,
-      });
-
-      document.dispatchEvent(event);
+      document.dispatchEvent(
+        new KeyboardEvent('keydown', { key: 'h', ctrlKey: true })
+      );
 
       expect(logOutMock).toHaveBeenCalledTimes(1);
 
-      // Cleanup
       wrapper.instance().componentWillUnmount();
     });
 
     it('calls alert when Ctrl + H is pressed', () => {
       const wrapper = shallow(<App />);
 
-      wrapper.instance().componentDidMount();
-
-      const event = new KeyboardEvent('keydown', {
-        key: 'h',
-        ctrlKey: true,
-      });
-
-      document.dispatchEvent(event);
+      document.dispatchEvent(
+        new KeyboardEvent('keydown', { key: 'h', ctrlKey: true })
+      );
 
       expect(alertMock).toHaveBeenCalledWith('Logging you out');
 
