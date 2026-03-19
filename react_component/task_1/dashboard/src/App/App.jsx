@@ -8,20 +8,25 @@ import Footer from '../Footer/Footer';
 import CourseList from '../CourseList/CourseList';
 
 class App extends Component {
-  componentDidMount() {
+  constructor(props) {
+    super(props);
+    this.handleKeyDown = this.handleKeyDown.bind(this);
+  }
+
+  handleKeyDown(event) {
+    if (event.key === 'h' && event.ctrlKey) {
+      alert('Logging you out');
+      this.props.logOut();
+    }
+  };
+
+   componentDidMount() {
     document.addEventListener('keydown', this.handleKeyDown);
   }
 
   componentWillUnmount() {
     document.removeEventListener('keydown', this.handleKeyDown);
   }
-
-  handleKeyDown = (event) => {
-    if (event.ctrlKey && event.keyCode === 72) {
-    alert('Logging you out');
-    this.props.logOut();
-    }
-  };
 
   render() {
     const { isLoggedIn = false } = this.props;
