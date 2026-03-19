@@ -1,11 +1,12 @@
 import './App.css';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Notifications from '../Notifications/Notifications';
+import Notification from '../Notifications/Notification';
 import Header from '../Header/Header';
 import Login from '../Login/Login';
 import Footer from '../Footer/Footer';
 import CourseList from '../CourseList/CourseList';
+import { getLatestNotification } from '../utils/util';
 
 class App extends Component {
   constructor(props) {
@@ -18,9 +19,9 @@ class App extends Component {
       alert('Logging you out');
       this.props.logOut();
     }
-  };
+  }
 
-   componentDidMount() {
+  componentDidMount() {
     document.addEventListener('keydown', this.handleKeyDown);
   }
 
@@ -29,40 +30,68 @@ class App extends Component {
   }
 
   render() {
-    const { isLoggedIn = false } = this.props;
-
-    const notificationsList = [
-      { id: 1, type: 'default', value: 'New course available' },
-      { id: 2, type: 'urgent', value: 'New resume available' },
-      { id: 3, type: 'urgent', html: { __html: 'Urgent requirement - complete by EOD' } },
-    ];
-
-    const coursesList = [
-      { id: 1, name: 'ES6', credit: 60 },
-      { id: 2, name: 'Webpack', credit: 20 },
-      { id: 3, name: 'React', credit: 40 },
-    ];
-
+    const { isLoggedIn } = this.props;
     return (
       <>
-        <Notifications notifications={notificationsList} />
-        <div className="App">
-          <Header />
-          {isLoggedIn ? <CourseList courses={coursesList} /> : <Login />}
-          <Footer />
-        </div>
+      <Notification listNotifications={listNotifications} />
+      <div className="App">
+        <Header />
+        {isLoggedIn ? (
+          <CourseList listCourses={listCourses}/>
+        ) : (
+          <Login />
+        )}
+        <Footer />
+      </div>
       </>
-    );
+    )
   }
 }
 
-App.defaultProps = {
-  logOut: () => {},
-};
-
 App.propTypes = {
   isLoggedIn: PropTypes.bool,
-  logOut: PropTypes.func,
-};
+  logOut: PropTypes.func
+}
+
+App.defaultProps = {
+  isLoggedIn: false,
+  logOut: () => {}
+}
+
+const listCourses = [
+  {
+    id: 1,
+    name:  'ES6',
+    credit: 60
+  },
+  {
+    id: 2,
+    name:  'Webpack',
+    credit: 20
+  },
+  {
+    id: 3,
+    name:  'React',
+    credit: 40
+  }
+]
+
+const listNotifications = [
+  {
+    id: 1,
+    type: "default",
+    value: "New course available"
+  },
+  {
+    id: 2,
+    type: "urgent",
+    value: "New resume available"
+  },
+  {
+    id: 3,
+    type: "urgent",
+    html: getLatestNotification(),
+  }
+]
 
 export default App;
