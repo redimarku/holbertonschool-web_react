@@ -1,27 +1,31 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import NotificationItem from './NotificationItem';
 import './Notifications.css';
-import closeButton from '../assets/close-button.png';
+import close from '../assets/close-button.png';
+import NotificationItem from './NotificationItem';
 
 class Notifications extends Component {
-  markAsRead(id) {
+  markAsRead = (id) => {
     console.log(`Notification ${id} has been marked as read`);
+  };
+
+  shouldComponentUpdate(nextProps) {
+    return (
+      nextProps.notifications.length !== this.props.notifications.length ||
+      nextProps.displayDrawer !== this.props.displayDrawer
+    );
   }
 
   render() {
     const { notifications = [], displayDrawer = false } = this.props;
 
-    const handleClick = () => {
-      console.log('Close button has been clicked');
-    };
-
     return (
       <div className="Notifications">
         <div className="notification-title">Your notifications</div>
+
         {displayDrawer && (
           <div className="notification-items">
             <p>Here is the list of notifications</p>
+
             {notifications.length === 0 ? (
               <p>No new notification for now</p>
             ) : (
@@ -38,8 +42,19 @@ class Notifications extends Component {
                 ))}
               </ul>
             )}
-            <button aria-label="Close" onClick={handleClick}>
-              <img src={closeButton} alt="close" style={{ width: '13px', height: '10px' }} />
+
+            <button
+              aria-label="Close"
+              style={{ position: 'absolute', top: '10px', right: '10px' }}
+              onClick={() =>
+                console.log('Close button has been clicked')
+              }
+            >
+              <img
+                src={close}
+                alt="close"
+                style={{ width: '30px', height: '30px' }}
+              />
             </button>
           </div>
         )}
@@ -47,22 +62,5 @@ class Notifications extends Component {
     );
   }
 }
-
-Notifications.propTypes = {
-  notifications: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      type: PropTypes.string.isRequired,
-      value: PropTypes.string,
-      html: PropTypes.shape({ __html: PropTypes.string }),
-    })
-  ),
-  displayDrawer: PropTypes.bool,
-};
-
-Notifications.defaultProps = {
-  notifications: [],
-  displayDrawer: false,
-};
 
 export default Notifications;
