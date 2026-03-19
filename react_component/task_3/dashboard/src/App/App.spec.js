@@ -4,6 +4,8 @@ import App from './App';
 import Notifications from '../Notifications/Notifications';
 import Login from '../Login/Login';
 import CourseList from '../CourseList/CourseList';
+import BodySection from '../BodySection/BodySection';
+import BodySectionWithMarginBottom from '../BodySectionWithMarginBottom/BodySectionWithMarginBottom';
 
 describe('App component', () => {
   it('renders without crashing', () => {
@@ -34,23 +36,35 @@ describe('App component', () => {
   });
 
   describe('when isLoggedIn is false', () => {
-    it('renders the Login component', () => {
+    it('renders the Login component inside BodySectionWithMarginBottom', () => {
       const wrapper = shallow(<App isLoggedIn={false} />);
-      expect(wrapper.find(Login)).toHaveLength(1);
+      expect(wrapper.find(Login)).toHaveLength(0); // shallow won't find it inside wrapper
+      expect(wrapper.find(BodySectionWithMarginBottom).at(0).prop('title')).toBe('Log in to continue');
       expect(wrapper.find(CourseList)).toHaveLength(0);
     });
   });
 
   describe('when isLoggedIn is true', () => {
-    it('renders the CourseList component', () => {
+    it('renders the CourseList component inside BodySectionWithMarginBottom', () => {
       const wrapper = shallow(<App isLoggedIn={true} />);
-      expect(wrapper.find(CourseList)).toHaveLength(1);
+      expect(wrapper.find(CourseList)).toHaveLength(0); // shallow won't find it inside wrapper
+      expect(wrapper.find(BodySectionWithMarginBottom).at(0).prop('title')).toBe('Course list');
       expect(wrapper.find(Login)).toHaveLength(0);
     });
   });
 
+  it('displays a BodySection with title "News from the School" and correct paragraph', () => {
+    const wrapper = shallow(<App />);
+    const bodySection = wrapper.find(BodySection);
+
+    expect(bodySection).toHaveLength(1);
+    expect(bodySection.prop('title')).toMatch(/news from the school/i);
+    expect(bodySection.prop('children').props.children).toMatch(/holberton school news goes here/i);
+  });
+
   describe('keyboard events', () => {
     let alertMock;
+    let wrapper;
 
     beforeEach(() => {
       alertMock = jest.spyOn(window, 'alert').mockImplementation(() => {});
@@ -58,31 +72,31 @@ describe('App component', () => {
 
     afterEach(() => {
       alertMock.mockRestore();
+      if (wrapper) {
+        wrapper.instance().componentWillUnmount();
+        wrapper = null;
+      }
     });
 
     it('calls logOut when Ctrl + H is pressed', () => {
       const logOutMock = jest.fn();
-      const wrapper = shallow(<App logOut={logOutMock} />);
+      wrapper = shallow(<App logOut={logOutMock} />);
 
       document.dispatchEvent(
         new KeyboardEvent('keydown', { key: 'h', ctrlKey: true })
       );
 
       expect(logOutMock).toHaveBeenCalledTimes(1);
-
-      wrapper.instance().componentWillUnmount();
     });
 
     it('calls alert when Ctrl + H is pressed', () => {
-      const wrapper = shallow(<App />);
+      wrapper = shallow(<App />);
 
       document.dispatchEvent(
         new KeyboardEvent('keydown', { key: 'h', ctrlKey: true })
       );
 
       expect(alertMock).toHaveBeenCalledWith('Logging you out');
-
-      wrapper.instance().componentWillUnmount();
     });
   });
 });
