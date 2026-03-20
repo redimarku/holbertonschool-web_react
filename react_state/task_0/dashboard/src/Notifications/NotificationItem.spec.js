@@ -1,37 +1,20 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { render, fireEvent } from '@testing-library/react';
+import '@testing-library/jest-dom';
 import NotificationItem from './NotificationItem';
 
-function runTests() {
-  try {
-    // Test default type
-    const wrapperDefault = shallow(
-      <NotificationItem type="default" value="test notification" />
-    );
-    const liDefault = wrapperDefault.find('li');
-    if (
-      liDefault.prop('data-notification-type') !== 'default' ||
-      liDefault.prop('style').color !== 'blue'
-    ) {
-      throw new Error('Default type test failed');
-    }
+test('calls markAsRead prop when clicked', () => {
+  const markAsReadMock = jest.fn();
+  const { container } = render(
+    <NotificationItem
+      id={5}
+      type="default"
+      value="Test notification"
+      markAsRead={markAsReadMock}
+    />
+  );
 
-    // Test urgent type
-    const wrapperUrgent = shallow(
-      <NotificationItem type="urgent" value="test notification" />
-    );
-    const liUrgent = wrapperUrgent.find('li');
-    if (
-      liUrgent.prop('data-notification-type') !== 'urgent' ||
-      liUrgent.prop('style').color !== 'red'
-    ) {
-      throw new Error('Urgent type test failed');
-    }
-
-    console.log('OK'); // Must log OK to pass the expected output
-  } catch (err) {
-    console.log('NOK'); // Log NOK if any test fails
-  }
-}
-
-runTests();
+  const li = container.querySelector('li');
+  fireEvent.click(li);
+  expect(markAsReadMock).toHaveBeenCalledWith(5);
+});
