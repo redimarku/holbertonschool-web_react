@@ -31,18 +31,26 @@ class Login extends Component {
 
   handleChangeEmail(e) {
     const email = e.target.value;
-    this.setState((prevState) => ({
-      email,
-      enableSubmit: this.validateFields(email, prevState.password),
-    }));
+    const { logIn } = this.props;
+    this.setState((prevState) => {
+      const enableSubmit = this.validateFields(email, prevState.password);
+      if (enableSubmit && logIn) {
+        logIn(email, prevState.password);
+      }
+      return { email, enableSubmit };
+    });
   }
 
   handleChangePassword(e) {
     const password = e.target.value;
-    this.setState((prevState) => ({
-      password,
-      enableSubmit: this.validateFields(prevState.email, password),
-    }));
+    const { logIn } = this.props;
+    this.setState((prevState) => {
+      const enableSubmit = this.validateFields(prevState.email, password);
+      if (enableSubmit && logIn) {
+        logIn(prevState.email, password);
+      }
+      return { password, enableSubmit };
+    });
   }
 
   render() {
