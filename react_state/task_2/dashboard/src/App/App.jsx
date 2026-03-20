@@ -7,8 +7,8 @@ import Login from "../Login/Login";
 import Notifications from "../Notifications/Notifications";
 import BodySection from "../BodySection/BodySection";
 import BodySectionWithMarginBottom from "../BodySection/BodySectionWithMarginBottom";
-import AppContext from "../Context/context";
 import "./App.css";
+import AppContext from "../Context/Context";
 
 class App extends Component {
   constructor(props) {
