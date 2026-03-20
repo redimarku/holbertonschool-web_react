@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import logo from '../assets/holberton-logo.jpg';
 import './Header.css';
-import newContext from '../Context/Context';
+import newContext from '../Context/context';
 
 class Header extends Component {
   render() {
