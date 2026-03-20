@@ -76,3 +76,19 @@ test('submitting the form does not reload the page', async () => {
 
   expect(screen.getByLabelText(/email/i)).toBeInTheDocument();
 });
+
+test('logIn prop is called with email and password on form submit', async () => {
+  const mockLogIn = jest.fn();
+  render(<Login logIn={mockLogIn} />);
+
+  const emailInput = screen.getByLabelText(/email/i);
+  const passwordInput = screen.getByLabelText(/password/i);
+  const submitBtn = screen.getByRole('button', { name: /ok/i });
+
+  await userEvent.type(emailInput, 'user@example.com');
+  await userEvent.type(passwordInput, 'validpassword123');
+  await userEvent.click(submitBtn);
+
+  expect(mockLogIn).toHaveBeenCalledTimes(1);
+  expect(mockLogIn).toHaveBeenCalledWith('user@example.com', 'validpassword123');
+});

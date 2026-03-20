@@ -7,7 +7,7 @@ import CourseList from '../CourseList/CourseList';
 import BodySection from '../BodySection/BodySection';
 import BodySectionWithMarginBottom from '../BodySection/BodySectionWithMarginBottom';
 // eslint-disable-next-line no-unused-vars
-import newContext from '../Context/context';
+import newContext from '../Context/Context';
 import './App.css';
 
 const coursesList = [
