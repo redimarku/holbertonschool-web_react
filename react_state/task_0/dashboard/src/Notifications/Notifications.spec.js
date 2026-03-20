@@ -63,3 +63,33 @@ test('re-renders if notifications length changes', () => {
 
   expect(queryByText('New notification')).toBeInTheDocument();
 });
+
+test('clicking on "Your notifications" calls handleDisplayDrawer', () => {
+  const handleDisplayDrawer = jest.fn();
+  const { getByText } = render(
+    <Notifications
+      displayDrawer={false}
+      notifications={notifications}
+      handleDisplayDrawer={handleDisplayDrawer}
+      handleHideDrawer={jest.fn()}
+    />
+  );
+
+  fireEvent.click(getByText(/Your notifications/i));
+  expect(handleDisplayDrawer).toHaveBeenCalledTimes(1);
+});
+
+test('clicking on the close button calls handleHideDrawer', () => {
+  const handleHideDrawer = jest.fn();
+  const { getByLabelText } = render(
+    <Notifications
+      displayDrawer={true}
+      notifications={notifications}
+      handleDisplayDrawer={jest.fn()}
+      handleHideDrawer={handleHideDrawer}
+    />
+  );
+
+  fireEvent.click(getByLabelText(/Close/i));
+  expect(handleHideDrawer).toHaveBeenCalledTimes(1);
+});

@@ -16,11 +16,22 @@ class Notifications extends Component {
   }
 
   render() {
-    const { notifications = [], displayDrawer = false } = this.props;
+    const {
+      notifications = [],
+      displayDrawer = false,
+      handleDisplayDrawer = () => {},
+      handleHideDrawer = () => {},
+    } = this.props;
 
     return (
       <div className="Notifications">
-        <div className="notification-title">Your notifications</div>
+        <div
+          className="notification-title"
+          onClick={handleDisplayDrawer}
+          style={{ cursor: 'pointer' }}
+        >
+          Your notifications
+        </div>
 
         {displayDrawer && (
           <div className="notification-items">
@@ -46,9 +57,7 @@ class Notifications extends Component {
             <button
               aria-label="Close"
               style={{ position: 'absolute', top: '10px', right: '10px' }}
-              onClick={() =>
-                console.log('Close button has been clicked')
-              }
+              onClick={handleHideDrawer}
             >
               <img
                 src={close}
