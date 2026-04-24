@@ -79,6 +79,8 @@ class App extends Component {
     });
   }
 
+  
+
   markNotificationAsRead(id) {
     console.log(`Notification ${id} has been marked as read`);
     this.setState((prevState) => ({
@@ -94,8 +96,14 @@ class App extends Component {
     window.removeEventListener('keydown', this.handleKeyDown);
   }
 
+  
+
   render() {
     const { displayDrawer, user, logOut, notifications, courses } = this.state;
+
+    const logout = () =>{
+    this.setState({ isLoggedIn: false })
+  }
 
     return (
       <NewContext.Provider value={{ user, logOut }}>

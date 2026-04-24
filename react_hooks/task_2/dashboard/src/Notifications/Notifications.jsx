@@ -3,22 +3,22 @@ import './Notifications.css';
 import close from '../assets/close-button.png';
 import NotificationItem from './NotificationItem';
 
-class Notifications extends Component {
-  shouldComponentUpdate(nextProps) {
-    return (
-      nextProps.notifications.length !== this.props.notifications.length ||
-      nextProps.displayDrawer !== this.props.displayDrawer
-    );
-  }
+const Notifications = ({ notifications, displayDrawer }) => {
+  // shouldComponentUpdate(nextProps) {
+  //   return (
+  //     nextProps.notifications.length !== this.props.notifications.length ||
+  //     nextProps.displayDrawer !== this.props.displayDrawer
+  //   );
+  // }
 
-  render() {
-    const {
-      notifications = [],
-      displayDrawer = false,
-      handleDisplayDrawer = () => {},
-      handleHideDrawer = () => {},
-      markNotificationAsRead,
-    } = this.props;
+  // render() {
+  //   const {
+  //     notifications = [],
+  //     displayDrawer = false,
+  //     handleDisplayDrawer = () => {},
+  //     handleHideDrawer = () => {},
+  //     markNotificationAsRead,
+  //   } = this.props;
 
     return (
       <div className="Notifications">
@@ -67,6 +67,6 @@ class Notifications extends Component {
       </div>
     );
   }
-}
+
 
 export default Notifications;
