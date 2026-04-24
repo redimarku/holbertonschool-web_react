@@ -1,5 +1,12 @@
 import axios from "axios";
-import { useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useReducer,
+} from "react";
+
 import CourseList from "../CourseList/CourseList";
 import "../CourseList/CourseList.css";
 import Footer from "../Footer/Footer";
@@ -8,8 +15,10 @@ import Login from "../Login/Login";
 import Notifications from "../Notifications/Notifications";
 import BodySection from "../BodySection/BodySection";
 import BodySectionWithMarginBottom from "../BodySection/BodySectionWithMarginBottom";
-import AppContext from "../Context/context";
+
 import { getLatestNotification } from "../utils/utils";
+import { appReducer, initialState, APP_ACTIONS } from "./appReducer";
+
 import "./App.css";
 
 function normalizeNotifications(data) {
@@ -22,9 +31,9 @@ function normalizeNotifications(data) {
   return nextNotifications.map((notification) =>
     notification.html
       ? {
-          ...notification,
-          html: { __html: getLatestNotification() },
-        }
+        ...notification,
+        html: { __html: getLatestNotification() },
+      }
       : notification
   );
 }
@@ -38,18 +47,17 @@ function normalizeCourses(data) {
 }
 
 function logDevelopmentError(error) {
-  if (typeof window !== "undefined" && window.location.hostname === "localhost") {
+  if (
+    typeof window !== "undefined" &&
+    window.location.hostname === "localhost"
+  ) {
     console.error(error);
   }
 }
 
 const App = () => {
-  const { user: contextUser } = useContext(AppContext);
+  const [state, dispatch] = useReducer(appReducer, initialState);
   const removedNotificationIdsRef = useRef(new Set());
-  const [displayDrawer, setDisplayDrawer] = useState(true);
-  const [user, setUser] = useState(contextUser);
-  const [notifications, setNotifications] = useState([]);
-  const [courses, setCourses] = useState([]);
 
   useEffect(() => {
     let isMounted = true;
@@ -59,12 +67,13 @@ const App = () => {
         const { data } = await axios.get("/notifications.json");
 
         if (isMounted) {
-          setNotifications(
-            normalizeNotifications(data).filter(
+          dispatch({
+            type: APP_ACTIONS.SET_NOTIFICATIONS,
+            payload: normalizeNotifications(data).filter(
               (notification) =>
                 !removedNotificationIdsRef.current.has(notification.id)
-            )
-          );
+            ),
+          });
         }
       } catch (error) {
         logDevelopmentError(error);
@@ -78,6 +87,7 @@ const App = () => {
     };
   }, []);
 
+
   useEffect(() => {
     let isMounted = true;
 
@@ -86,56 +96,60 @@ const App = () => {
         const { data } = await axios.get("/courses.json");
 
         if (isMounted) {
-          setCourses(normalizeCourses(data));
+          dispatch({
+            type: APP_ACTIONS.SET_COURSES,
+            payload: normalizeCourses(data),
+          });
         }
       } catch (error) {
         logDevelopmentError(error);
       }
     };
 
-    fetchCourses();
+    if (state.user.isLoggedIn) {
+      fetchCourses();
+    }
 
     return () => {
       isMounted = false;
     };
-  }, [user]);
+  }, [state.user.isLoggedIn]);
 
   const handleDisplayDrawer = useCallback(() => {
-    setDisplayDrawer(true);
+    dispatch({ type: APP_ACTIONS.OPEN_DRAWER });
   }, []);
 
   const handleHideDrawer = useCallback(() => {
-    setDisplayDrawer(false);
+    dispatch({ type: APP_ACTIONS.CLOSE_DRAWER });
   }, []);
 
   const logIn = useCallback((email, password) => {
-    setUser({ email, password, isLoggedIn: true });
+    dispatch({
+      type: APP_ACTIONS.LOGIN,
+      payload: { email, password },
+    });
   }, []);
 
   const logOut = useCallback(() => {
-    setUser(contextUser);
-  }, [contextUser]);
-
-  const markNotificationAsRead = useCallback((id) => {
-    removedNotificationIdsRef.current.add(id);
-    setNotifications((prevNotifications) =>
-      prevNotifications.filter((notification) => notification.id !== id)
-    );
+    dispatch({ type: APP_ACTIONS.LOGOUT });
   }, []);
 
-  const contextValue = useMemo(
-    () => ({ user, logOut }),
-    [user, logOut]
-  );
+  const markNotificationAsRead = useCallback((id) => {
+    dispatch({
+      type: APP_ACTIONS.MARK_NOTIFICATION_READ,
+      payload: id,
+    });
+  }, []);
 
   return (
-    <AppContext.Provider value={contextValue}>
+    <>
       <div className="notifications-header">
-        <Header />
+        <Header user={state.user} logOut={logOut} />
+
         <div className="root-notifications">
           <Notifications
-            notifications={notifications}
-            displayDrawer={displayDrawer}
+            notifications={state.notifications}
+            displayDrawer={state.displayDrawer}
             handleDisplayDrawer={handleDisplayDrawer}
             handleHideDrawer={handleHideDrawer}
             markNotificationAsRead={markNotificationAsRead}
@@ -143,9 +157,9 @@ const App = () => {
         </div>
       </div>
 
-      {user.isLoggedIn ? (
+      {state.user.isLoggedIn ? (
         <BodySectionWithMarginBottom title="Course list">
-          <CourseList courses={courses} />
+          <CourseList courses={state.courses} />
         </BodySectionWithMarginBottom>
       ) : (
         <BodySectionWithMarginBottom title="Log in to continue">
@@ -157,8 +171,8 @@ const App = () => {
         <p>Holberton School News goes here</p>
       </BodySection>
 
-      <Footer />
-    </AppContext.Provider>
+      <Footer user={state.user} />
+    </>
   );
 };
 
